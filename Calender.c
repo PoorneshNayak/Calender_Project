@@ -53,6 +53,42 @@ char* get_day_name(int day_of_week) {
     return days[day_of_week];
 }
 
+//to generate calender of a month of given year
+void calender_of_month(int year,int month) {
+    printf("Enter year : ");
+    scanf("%d", &year);
+    printf("Enter month (1-12): ");
+    scanf("%d", &month);
+    // Check if the input month is within the valid range
+    if (month < 1 || month > 12) {
+        printf("Invalid month input.\n");
+        return;
+    }
+
+    // Print the calendar header
+    printf("\n\tYear: %d \tMonth: %d\n", year, month);
+    printf("  Sun  Mon  Tue  Wed  Thu  Fri  Sat\n");
+
+    // Calculate the day of the week for the first day of the month
+    int dayOfWeek = get_day_of_week(year, month, 1);
+
+    // Determine the number of days in the month
+    int daysInMonth = get_days_in_month(year,month);
+
+    // Print the calendar
+    for (int i = 0; i < dayOfWeek; i++) {
+        printf("     ");
+    }
+    for (int day = 1; day <= daysInMonth; day++) {
+        printf("%5d", day);
+        if (++dayOfWeek > 6) {
+            printf("\n");
+            dayOfWeek = 0;
+        }
+    }
+    printf("\n");
+}
+
 //to find the day of the week for a given date
 void find_day_by_date() {
     struct Date date = get_date_from_user();
@@ -154,25 +190,29 @@ void view_notes() {
 
 int main() {
     while (1) {
-        printf("\n1. Find the day of a specific date\n");
-        printf("2. Jump to a specific date\n");
-        printf("3. Calculate days between two dates\n");
-        printf("4. Add a note to a particular date\n");
-        printf("5. View notes for a particular date\n");
-        printf("6. Exit\n");
+        printf("\n1.Generate calender of given month and year\n");
+        printf("2. Find the day of a specific date\n");
+        printf("3. Jump to a specific date\n");
+        printf("4. Calculate days between two dates\n");
+        printf("5. Add a note to a particular date\n");
+        printf("6. View notes for a particular date\n");
+        printf("7. Exit\n");
 
-        int choice;
-        printf("Enter your choice (1-6): ");
+        int choice,year,month;
+        printf("Enter your choice (1-7): ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                find_day_by_date();
+                calender_of_month(year,month);
                 break;
             case 2:
-                jump_to_date();
+                find_day_by_date();
                 break;
             case 3:
+                jump_to_date();
+                break;
+            case 4:
                 printf("Calculate days between two dates:\n");
                 struct Date start_date = get_date_from_user();
                 struct Date end_date = get_date_from_user();
@@ -182,13 +222,13 @@ int main() {
                            days_difference, start_date.year, start_date.month, start_date.day, end_date.year, end_date.month, end_date.day);
                 }   
                 break;
-            case 4:
+            case 5:
                 add_note();
                 break;
-            case 5:
+            case 6:
                 view_notes();
                 break;
-            case 6:
+            case 7:
                 printf("Exiting the program.\n");
                 return 0;
             default:
