@@ -199,7 +199,7 @@ int main() {
         printf("7. Exit\n");
 
         int choice,year,month;
-        printf("Enter your choice (1-7): ");
+        printf("\nEnter your choice (1-7): ");
         scanf("%d", &choice);
 
         switch (choice) {
